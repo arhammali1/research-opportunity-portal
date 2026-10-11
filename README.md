@@ -8,7 +8,7 @@ and delete research opportunities — built for the **Computer Networks (CN)** A
 **Section:** BCS-5A
 **University:** FAST-NUCES, Peshawar Campus
 
-**GitHub Repository:** `<ADD_YOUR_REPO_LINK_HERE_BEFORE_SUBMISSION>`
+**GitHub Repository:** https://github.com/arhammali1/research-opportunity-portal
 
 ---
 
