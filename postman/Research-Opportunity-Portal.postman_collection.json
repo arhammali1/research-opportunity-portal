@@ -1,0 +1,230 @@
+{
+  "info": {
+    "name": "University Research Opportunity Portal",
+    "description": "CRUD API tests for the Research Opportunity Portal backend (CN Assignment #01, Arham Ali, 24P-0748, BCS-5A).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000/api" },
+    { "key": "opportunity_id", "value": "" },
+    { "key": "opportunity_id_2", "value": "" },
+    { "key": "opportunity_id_3", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Create Opportunity #1",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Machine Learning for Crop Yield Prediction\",\n  \"description\": \"Build ML models that predict crop yields using satellite imagery.\",\n  \"research_area\": \"Machine Learning\",\n  \"faculty_name\": \"Dr. Ayesha Khan\",\n  \"department\": \"Computer Science\",\n  \"required_skills\": \"Python, scikit-learn\",\n  \"available_positions\": 2,\n  \"application_deadline\": \"2026-12-15\",\n  \"status\": \"Open\"\n}"
+        },
+        "url": { "raw": "{{base_url}}/opportunities", "host": ["{{base_url}}"], "path": ["opportunities"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+              "var json = pm.response.json();",
+              "pm.collectionVariables.set('opportunity_id', json.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Create Opportunity #2",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Network Security Vulnerability Analysis\",\n  \"description\": \"Study common vulnerabilities in IoT network protocols.\",\n  \"research_area\": \"Network Security\",\n  \"faculty_name\": \"Dr. Bilal Ahmed\",\n  \"department\": \"Computer Science\",\n  \"required_skills\": \"Networking, Wireshark, Linux\",\n  \"available_positions\": 3,\n  \"application_deadline\": \"2026-11-30\",\n  \"status\": \"Open\"\n}"
+        },
+        "url": { "raw": "{{base_url}}/opportunities", "host": ["{{base_url}}"], "path": ["opportunities"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+              "var json = pm.response.json();",
+              "pm.collectionVariables.set('opportunity_id_2', json.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Create Opportunity #3",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Natural Language Processing for Urdu Text\",\n  \"description\": \"Develop NLP pipelines for Urdu sentiment analysis.\",\n  \"research_area\": \"Natural Language Processing\",\n  \"faculty_name\": \"Dr. Sana Malik\",\n  \"department\": \"Computer Science\",\n  \"required_skills\": \"Python, NLTK, Linguistics\",\n  \"available_positions\": 1,\n  \"application_deadline\": \"2027-01-10\",\n  \"status\": \"Open\"\n}"
+        },
+        "url": { "raw": "{{base_url}}/opportunities", "host": ["{{base_url}}"], "path": ["opportunities"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+              "var json = pm.response.json();",
+              "pm.collectionVariables.set('opportunity_id_3', json.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Get All Opportunities",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/opportunities", "host": ["{{base_url}}"], "path": ["opportunities"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response is an array', function () { pm.expect(pm.response.json()).to.be.an('array'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Get One Opportunity by ID",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/opportunities/{{opportunity_id}}", "host": ["{{base_url}}"], "path": ["opportunities", "{{opportunity_id}}"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Returned id matches requested id', function () {",
+              "  var json = pm.response.json();",
+              "  pm.expect(String(json.id)).to.eql(pm.collectionVariables.get('opportunity_id'));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Update Opportunity",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"available_positions\": 5,\n  \"required_skills\": \"Python, scikit-learn, TensorFlow\"\n}"
+        },
+        "url": { "raw": "{{base_url}}/opportunities/{{opportunity_id}}", "host": ["{{base_url}}"], "path": ["opportunities", "{{opportunity_id}}"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Close Opportunity (Status Update)",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"Closed\"\n}"
+        },
+        "url": { "raw": "{{base_url}}/opportunities/{{opportunity_id_2}}", "host": ["{{base_url}}"], "path": ["opportunities", "{{opportunity_id_2}}"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Status is now Closed', function () {",
+              "  var json = pm.response.json();",
+              "  pm.expect(json.opportunity.status).to.eql('Closed');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Delete Opportunity",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "{{base_url}}/opportunities/{{opportunity_id_3}}", "host": ["{{base_url}}"], "path": ["opportunities", "{{opportunity_id_3}}"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Get Deleted Opportunity (Expect 404)",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/opportunities/{{opportunity_id_3}}", "host": ["{{base_url}}"], "path": ["opportunities", "{{opportunity_id_3}}"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Create Opportunity with Invalid Data (Expect 400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"\",\n  \"description\": \"Missing most required fields.\"\n}"
+        },
+        "url": { "raw": "{{base_url}}/opportunities", "host": ["{{base_url}}"], "path": ["opportunities"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
